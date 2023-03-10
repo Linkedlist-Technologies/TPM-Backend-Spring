@@ -25,6 +25,6 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Install dependency
       run: mvn dependency:resolve
-#     - name: Execute Jar File
-#       run: sudo kill -9 `sudo lsof -t -i:80` & sudo java -jar /home/ubuntu/actions-runner/_work/VisaProcess-Backend/VisaProcess-Backend/target/skytravel-0.0.1-SNAPSHOT.jar &
+    - name: Execute Jar File
+      run: sudo kill -9 `sudo lsof -t -i:80` & sudo java -jar /home/ubuntu/actions-runner/_work/TPM-Backend-Spring/TPM-Backend-Spring/target/tpmapp-0.0.1-SNAPSHOT.jar &
        
