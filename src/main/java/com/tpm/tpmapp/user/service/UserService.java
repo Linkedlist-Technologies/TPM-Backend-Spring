@@ -1,12 +1,12 @@
 package com.tpm.tpmapp.user.service;
 
+import com.tpm.tpmapp.helper.Constraints;
 import com.tpm.tpmapp.user.dto.request.ChangeDeviceDTO;
 import com.tpm.tpmapp.user.dto.request.LoginDTO;
 import com.tpm.tpmapp.user.dto.response.RegistrationResponseDTO;
 import com.tpm.tpmapp.user.model.User;
 import com.tpm.tpmapp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class UserService {
 
         String token = registrationService.login(loginDTO.getUsername(), loginDTO.getPassword());
         return RegistrationResponseDTO.builder()
-                .status(HttpStatus.OK)
+                .status(Constraints.HTTPSTATUS_SUCCESS)
                 .data(userRepository.findByEmailId(loginDTO.getUsername()).orElse(null))
                 .token(token)
                 .build();
@@ -33,7 +33,7 @@ public class UserService {
 
         String token = registrationService.login(loginDTO.getUsername(), loginDTO.getPassword());
         return RegistrationResponseDTO.builder()
-                .status(HttpStatus.OK)
+                .status(Constraints.HTTPSTATUS_FAILED)
                 .data(userRepository.findByEmailId(loginDTO.getUsername()).orElse(null))
                 .token(token)
                 .build();

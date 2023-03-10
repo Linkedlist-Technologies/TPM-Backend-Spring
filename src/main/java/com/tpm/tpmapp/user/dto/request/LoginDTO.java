@@ -7,10 +7,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class LoginDTO {
 
-    @NotBlank
+    @NotBlank(message = "Enter a valid UserName")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "Enter a valid Password")
     private String password;
 
     private String deviceMobile;

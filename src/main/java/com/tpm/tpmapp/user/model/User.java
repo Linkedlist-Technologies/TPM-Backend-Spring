@@ -1,15 +1,14 @@
 package com.tpm.tpmapp.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tpm.tpmapp.payment.model.Payment;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +19,7 @@ import java.util.UUID;
 @With
 @Getter
 @Setter
-@Table(name = "user_tpm")
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -46,6 +45,10 @@ public class User implements UserDetails {
     private boolean freeUser = true;
 
     private int subscriptionType;
+
+    @OneToMany
+    @ToString.Exclude
+    private List<Payment> payments;
 
     @Column(unique = true)
     private String username = null;
