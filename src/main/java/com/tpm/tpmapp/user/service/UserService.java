@@ -51,6 +51,12 @@ public class UserService {
 
     private User getUserByEmail(String email) {
         return userRepository.findByEmailId(email).orElseThrow(() -> new UsernameNotFoundException
-                (String.format("User With email {} Not Found", email)));
+                (String.format("User With email %s Not Found", email)));
+    }
+
+    public boolean verifyDevice(User user, String deviceMobile) {
+        if (user.getMobileDevice().equals(deviceMobile)) {
+            return true;
+        } else return user.getWebDevice().equals(deviceMobile);
     }
 }

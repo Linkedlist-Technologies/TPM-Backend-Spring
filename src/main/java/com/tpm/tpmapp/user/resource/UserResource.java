@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -73,6 +70,22 @@ public class UserResource {
         try {
             userService.changeDevice(changeDeviceDTO);
             return ResponseEntity.ok(new BaseResponse(Constraints.HTTPSTATUS_SUCCESS, "Password successfully changed"));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(Constraints.INTERNAL_SERVER_ERROR_MESSAGE);
+        }
+    }
+
+    @GetMapping("/verifyDevice")
+    public ResponseEntity<Object> verifyDevice(@AuthenticationPrincipal User user, @RequestParam String deviceMobile) {
+        try {
+            if (userService.verifyDevice(user, deviceMobile)) {
+                return ResponseEntity.ok(new BaseResponse(Constraints.HTTPSTATUS_SUCCESS, "Device Verification is Successful"));
+            } else {
+                return ResponseEntity.ok(new BaseResponse(Constraints.HTTPSTATUS_FAILED, "This Device doesn't belong to current user"));
+
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
