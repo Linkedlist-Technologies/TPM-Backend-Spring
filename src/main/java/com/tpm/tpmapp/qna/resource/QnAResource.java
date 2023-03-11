@@ -1,6 +1,7 @@
 package com.tpm.tpmapp.qna.resource;
 
 import com.tpm.tpmapp.helper.Constraints;
+import com.tpm.tpmapp.qna.dto.QuestionsResponseDTO;
 import com.tpm.tpmapp.qna.service.QnAService;
 import com.tpm.tpmapp.user.dto.response.BaseResponse;
 import com.tpm.tpmapp.user.model.User;
@@ -37,7 +38,10 @@ public class QnAResource {
     @GetMapping("/questions")
     public ResponseEntity<Object> getQuestions(@AuthenticationPrincipal User user) {
         try {
-            return ResponseEntity.ok(qnAService.getAllQuestions(user));
+            return ResponseEntity.ok(QuestionsResponseDTO.builder()
+                    .status(Constraints.HTTPSTATUS_SUCCESS)
+                    .data(qnAService.getAllQuestions(user))
+                    .build());
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
