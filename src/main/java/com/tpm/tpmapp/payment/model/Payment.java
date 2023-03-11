@@ -18,7 +18,6 @@ import java.util.UUID;
 @With
 @Getter
 @Setter
-@Table
 public class Payment {
 
     @Id
