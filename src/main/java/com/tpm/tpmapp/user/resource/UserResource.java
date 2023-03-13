@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +36,8 @@ public class UserResource {
     public ResponseEntity<Object> registerUser(@Valid @RequestBody UserDTO userDTO) {
         try {
             return ResponseEntity.ok(registrationService.register(userDTO));
+        } catch(AuthenticationException e){
+            return ResponseEntity.ok().body(new BaseResponse("failed","User already exist :("));
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();

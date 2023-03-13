@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,11 @@ public class RegistrationService {
                 .build();
     }
 
-    public User create(UserDTO userDto) throws Exception {
+    public User create(UserDTO userDto) throws AuthenticationException {
 
         if (userRepository.findByEmailId(userDto.getEmailId()).isPresent()) {
-            throw new Exception("User with this EmailId Already Exist");
+            throw new AuthenticationException("User with this EmailId Already Exist") {
+            };
         }
 
         String encodedPassword = new BCryptPasswordEncoder().encode(userDto.getPassword());
