@@ -48,7 +48,7 @@ public class UserResource {
         try {
             return ResponseEntity.ok(userService.login(loginDTO));
         } catch(BadCredentialsException exception){
-            return ResponseEntity.internalServerError().body(new BaseResponse("failed","UserName or Password is invalid :("));
+            return ResponseEntity.ok().body(new BaseResponse("failed","UserName or Password is invalid :("));
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
