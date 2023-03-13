@@ -12,6 +12,7 @@ import com.tpm.tpmapp.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,6 +47,8 @@ public class UserResource {
     public ResponseEntity<Object> loginUser(@Valid @RequestBody LoginDTO loginDTO) {
         try {
             return ResponseEntity.ok(userService.login(loginDTO));
+        } catch(BadCredentialsException exception){
+            return ResponseEntity.internalServerError().body(new BaseResponse("failed","UserName or Password is invalid :("));
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
